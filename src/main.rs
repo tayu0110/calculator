@@ -80,11 +80,11 @@ fn do_calc(str: String) -> Option<i32> {
                     if *op == '*' || *op == '/' || *op == '%' {
                         let num2 = num_stack.pop().unwrap();
                         if *op == '*' {
-                            num *= num2;
+                            num = num2 * num;
                         } else if *op == '/' {
-                            num /= num2;
+                            num = num2 / num;
                         } else {
-                            num %= num;
+                            num = num2 % num;
                         }
                         op_stack.pop();
                     }
@@ -118,71 +118,6 @@ fn do_calc(str: String) -> Option<i32> {
 
     return Some(num_stack.pop().unwrap());
 }
-
-// fn do_calc(str: String) -> i32 {
-//     let vec_str = str.chars().collect::<Vec<_>>();
-//     let mut num_stack: Vec<i32> = Vec::new();
-//     let mut op_stack = Vec::new();
-//     let len = str.len();
-
-//     let mut num_str = String::new();
-//     for i in 0..len {
-//         let c = vec_str[i];
-
-//         if c.is_ascii_whitespace() {
-//             continue;
-//         }
-
-//         if c.is_ascii_digit() {
-//             num_str.push(c);
-//         } else {
-//             if !num_str.is_empty() {
-//                 let mut num: i32 = num_str.parse().unwrap();
-
-//                 if !op_stack.is_empty() {
-//                     let op = op_stack.last().unwrap();
-//                     if *op == '*' || *op == '/' || *op == '%' {
-//                         let num2 = num_stack.pop().unwrap();
-//                         if *op == '*' {
-//                             num *= num2;
-//                         } else if *op == '/' {
-//                             num /= num2;
-//                         } else {
-//                             num %= num;
-//                         }
-//                         op_stack.pop();
-//                     }
-//                 }
-                
-//                 num_stack.push(num);
-//                 num_str.clear();
-//             }
-
-//             if is_operator(c) {
-//                 op_stack.push(c);
-//             } else if c == '(' {
-//                 op_stack.push(c);
-//             } else if c == ')' {
-//                 if !sub_calc(&mut num_stack, &mut op_stack) {
-//                     println!("Internal Error is occurred. This program has exited.");
-//                     exit(1);
-//                 }
-//             } else {
-//                 println!("Internal Error is occurred. This program has exited.");
-//                 exit(1);
-//             }
-//         }
-//     }
-
-//     if !num_str.is_empty() {
-//         let num: i32 = num_str.parse().unwrap();
-//         num_stack.push(num);
-//     }
-
-//     sub_calc(&mut num_stack, &mut op_stack);
-
-//     return num_stack.pop().unwrap();
-// }
 
 fn sub_calc(num_stack: &mut Vec<i32>, op_stack: &mut Vec<char>) -> bool {
     while !op_stack.is_empty() {
